@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jogo da Cobrinha</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Tela de início -->
+  <div id="usernameForm">
+    <h2>Digite seu nome:</h2>
+    <input type="text" id="usernameInput" placeholder="Ex: João" maxlength="20" />
+    <button id="startGameBtn" disabled>Iniciar Jogo</button>
+  </div>
+
+  <!-- Contagem regressiva -->
+  <div id="countdownOverlay">
+    <div id="countdownText">3</div>
+  </div>
+
+  <!-- Jogo -->
+  <div class="score" id="scoreDisplay">Pontos: 0</div>
+  <canvas id="gameCanvas"></canvas>
+  <div class="controls">
+    <div></div><button class="btn" data-dir="up">↑</button><div></div>
+    <button class="btn" data-dir="left">←</button>
+    <button class="btn" data-dir="down">↓</button>
+    <button class="btn" data-dir="right">→</button>
+  </div>
+  <div class="game-over" id="gameOver">FIM DE JOGO</div>
+  <div class="leaderboard" id="leaderboard">
+    <strong>Top 10 Global:</strong>
+    <div id="topScores">Carregando...</div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <!-- Lógica do jogo -->
+  <script src="script.js"></script>
+</body>
+</html>
