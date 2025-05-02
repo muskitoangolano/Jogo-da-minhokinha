@@ -7,19 +7,17 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Tela de início -->
+  
   <div id="usernameForm">
     <h2>Digite seu nome:</h2>
     <input type="text" id="usernameInput" placeholder="Ex: Muskito" maxlength="20" />
     <button id="startGameBtn" disabled>Iniciar Jogo</button>
   </div>
 
-  <!-- Contagem regressiva -->
   <div id="countdownOverlay">
     <div id="countdownText">3</div>
   </div>
 
-  <!-- Jogo -->
   <div class="score" id="scoreDisplay">Pontos: 0</div>
   <canvas id="gameCanvas"></canvas>
   <div class="controls">
@@ -34,11 +32,9 @@
     <div id="topScores">Carregando...</div>
   </div>
 
-  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
-  <!-- Lógica do jogo -->
   <script src="script.js"></script>
 </body>
 </html>
