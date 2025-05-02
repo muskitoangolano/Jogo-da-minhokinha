@@ -1,4 +1,3 @@
-// 🔧 CONFIGURE SEU FIREBASE AQUI 🔧
 const firebaseConfig = {
 apiKey: "AIzaSyAs_uFMFNrkTZjx4AAIvi6oOpSRDAcdNxY",
 authDomain: "jogodaminhokinha.firebaseapp.com",
@@ -7,11 +6,9 @@ projectId: "jogodaminhokinha",
 appId: "1:1084697716718:web:5ee24c3671f7492a5050ff"
 };
 
-// Inicialize o Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
-// Elementos do DOM
 const usernameForm = document.getElementById("usernameForm");
 const usernameInput = document.getElementById("usernameInput");
 const startGameBtn = document.getElementById("startGameBtn");
@@ -23,7 +20,6 @@ const topScoresList = document.getElementById("topScores");
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Variáveis do jogo
 let lastTimestamp = 0;
 let score = 0;
 let speedInterval = 100;
@@ -32,7 +28,6 @@ let snake, food, dx, dy, running = false;
 let animationFrameId;
 let currentUsername = "";
 
-// Ajusta o canvas
 function resize() {
   const size = Math.min(window.innerWidth * 0.9, 600);
   canvas.width = size;
@@ -41,10 +36,8 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
-// Configurações do jogo
 const gridSize = 20;
 
-// Carrega nome da sessão
 window.onload = () => {
   currentUsername = sessionStorage.getItem("username");
   if (currentUsername) {
@@ -56,12 +49,10 @@ window.onload = () => {
   loadTopScores();
 };
 
-// Validação do campo de nome
 usernameInput.addEventListener("input", () => {
   startGameBtn.disabled = !usernameInput.value.trim();
 });
 
-// Salva nome e inicia contagem regressiva
 startGameBtn.addEventListener("click", () => {
   currentUsername = usernameInput.value.trim();
   if (currentUsername) {
@@ -72,7 +63,6 @@ startGameBtn.addEventListener("click", () => {
   }
 });
 
-// Contagem regressiva de 3 segundos
 function startCountdown() {
   let count = 3;
   countdownText.textContent = count;
@@ -91,7 +81,6 @@ function startCountdown() {
   }, 1000);
 }
 
-// Inicializa o jogo
 function initGame() {
   snake = [{x: 10, y: 10}];
   dx = 1; dy = 0;
@@ -105,7 +94,6 @@ function initGame() {
   animationFrameId = requestAnimationFrame(gameLoop);
 }
 
-// Posiciona comida
 function placeFood() {
   let valid = false;
   while (!valid) {
@@ -116,29 +104,24 @@ function placeFood() {
   }
 }
 
-// Atualiza pontuação
 function updateScore() {
   scoreDisplay.textContent = `Pontos: ${score}`;
 }
 
-// Desenha o jogo
 function draw() {
   const size = canvas.width / gridSize;
   ctx.fillStyle = "#111";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Comida
   ctx.fillStyle = "#f00";
   ctx.fillRect(food.x * size, food.y * size, size, size);
 
-  // Cobrinha
   ctx.fillStyle = "#0f0";
   snake.forEach(part => {
     ctx.fillRect(part.x * size, part.y * size, size, size);
   });
 }
 
-// Som ao comer bloco
 function playEatSound() {
   const context = new (window.AudioContext || window.webkitAudioContext)();
   const oscillator = context.createOscillator();
@@ -149,7 +132,6 @@ function playEatSound() {
   oscillator.stop(context.currentTime + 0.1);
 }
 
-// Loop do jogo
 function gameLoop(timestamp) {
   if (!running) return;
 
@@ -161,7 +143,6 @@ function gameLoop(timestamp) {
 
   const head = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-  // Verifica colisão
   if (
     head.x < 0 || head.x >= gridSize ||
     head.y < 0 || head.y >= gridSize ||
@@ -175,7 +156,6 @@ function gameLoop(timestamp) {
 
   snake.unshift(head);
 
-  // Comeu comida?
   if (head.x === food.x && head.y === food.y) {
     score++;
     updateScore();
@@ -196,7 +176,6 @@ function gameLoop(timestamp) {
   animationFrameId = requestAnimationFrame(gameLoop);
 }
 
-// Envia pontuação com nome
 function submitScore(finalScore) {
   const scoresRef = database.ref("scores");
   scoresRef.push({ 
@@ -208,7 +187,6 @@ function submitScore(finalScore) {
   });
 }
 
-// Carrega as melhores pontuações
 function loadTopScores() {
   const scoresRef = database.ref("scores");
   scoresRef.orderByChild("score").limitToLast(10).on("value", snapshot => {
@@ -226,7 +204,6 @@ function loadTopScores() {
   });
 }
 
-// Controles
 function handleDirection(dir) {
   if (!running) initGame();
   if (dir === 'up' && dy !== 1) { dx = 0; dy = -1; }
@@ -235,7 +212,6 @@ function handleDirection(dir) {
   if (dir === 'right' && dx !== -1) { dx = 1; dy = 0; }
 }
 
-// Eventos dos botões
 document.querySelectorAll('.btn').forEach(btn => {
   btn.addEventListener('touchstart', (e) => {
     e.preventDefault();
@@ -247,7 +223,6 @@ document.querySelectorAll('.btn').forEach(btn => {
   });
 });
 
-// Teclado
 window.addEventListener('keydown', (e) => {
   const keyMap = {
     ArrowUp: 'up', w: 'up', W: 'up',
@@ -258,7 +233,6 @@ window.addEventListener('keydown', (e) => {
   if (keyMap[e.key]) handleDirection(keyMap[e.key]);
 });
 
-// Reinicia ao clicar
 canvas.addEventListener('click', () => {
   if (!running) initGame();
 });
