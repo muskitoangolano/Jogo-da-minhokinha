@@ -1,4 +1,3 @@
-// 🔧 CONFIGURE SEU FIREBASE AQUI 🔧
 const firebaseConfig = {
   apiKey: "AIzaSyAs_uFMFNrkTZjx4AAIvi6oOpSRDAcdNxY",
   authDomain: "jogodaminhokinha.firebaseapp.com",
@@ -7,11 +6,9 @@ const firebaseConfig = {
   appId: "1:1084697716718:web:5ee24c3671f7492a5050ff"
 };
 
-// Inicialize o Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
-// Elementos do DOM
 const loginModal = document.getElementById("loginModal");
 const usernameInput = document.getElementById("usernameInput");
 const startGameBtn = document.getElementById("startGameBtn");
@@ -26,7 +23,6 @@ const ctx = canvas.getContext("2d");
 const gameOverText = document.getElementById("gameOver");
 const buttons = document.querySelectorAll(".btn");
 
-// Variáveis do jogo
 let lastTimestamp = 0;
 let score = 0;
 let speedInterval = 100;
@@ -36,7 +32,6 @@ let animationFrameId;
 let currentUsername = "";
 const gridSize = 20;
 
-// Ajusta o canvas
 function resize() {
   const size = Math.min(window.innerWidth * 0.9, 600);
   canvas.width = size;
@@ -46,7 +41,6 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
-// Carrega nome da sessão
 window.addEventListener('DOMContentLoaded', () => {
   currentUsername = sessionStorage.getItem("username");
   if (currentUsername) {
@@ -58,14 +52,12 @@ window.addEventListener('DOMContentLoaded', () => {
   loadTopScores();
 });
 
-// Validação do campo de nome
 if (usernameInput) {
   usernameInput.addEventListener("input", () => {
     startGameBtn.disabled = !usernameInput.value.trim();
   });
 }
 
-// Salva nome e inicia contagem regressiva
 if (startGameBtn) {
   startGameBtn.addEventListener("click", () => {
     currentUsername = usernameInput.value.trim();
@@ -79,7 +71,6 @@ if (startGameBtn) {
   });
 }
 
-// Contagem regressiva de 3 segundos
 function startCountdown() {
   let count = 3;
   countdownText.textContent = count;
@@ -96,7 +87,6 @@ function startCountdown() {
   }, 1000);
 }
 
-// Inicializa o jogo
 function initGame() {
   snake = [{ x: 10, y: 10 }];
   dx = 1;
@@ -111,7 +101,6 @@ function initGame() {
   requestAnimationFrame(gameLoop);
 }
 
-// Posiciona comida
 function placeFood() {
   let valid = false;
   while (!valid) {
@@ -122,12 +111,10 @@ function placeFood() {
   }
 }
 
-// Atualiza pontuação
 function updateScore() {
   scoreDisplay.textContent = `Pontos: ${score}`;
 }
 
-// Desenha o jogo
 function draw() {
   const size = canvas.width / gridSize;
   ctx.fillStyle = "#111";
@@ -140,7 +127,6 @@ function draw() {
   });
 }
 
-// Som ao comer bloco
 function playEatSound() {
   const context = new (window.AudioContext || window.webkitAudioContext)();
   const oscillator = context.createOscillator();
@@ -151,7 +137,6 @@ function playEatSound() {
   oscillator.stop(context.currentTime + 0.1);
 }
 
-// Loop do jogo
 function gameLoop(timestamp) {
   if (!running) return;
   if (timestamp - (lastTimestamp || 0) < speedInterval) {
@@ -189,7 +174,6 @@ function gameLoop(timestamp) {
   animationFrameId = requestAnimationFrame(gameLoop);
 }
 
-// Envia pontuação com nome
 function submitScore(finalScore) {
   const scoresRef = database.ref("scores");
   scoresRef.push({
@@ -199,7 +183,6 @@ function submitScore(finalScore) {
   }).catch(console.error);
 }
 
-// Carrega as melhores pontuações
 function loadTopScores() {
   const scoresRef = database.ref("scores");
   scoresRef.orderByChild("score").limitToLast(10).on("value", snapshot => {
@@ -215,7 +198,6 @@ function loadTopScores() {
   }, console.error);
 }
 
-// Alterna visibilidade do ranking
 if (toggleRankingBtn) {
   toggleRankingBtn.addEventListener('click', () => {
     const isVisible = globalRanking.style.display === 'block';
@@ -224,7 +206,6 @@ if (toggleRankingBtn) {
   });
 }
 
-// Controles
 function handleDirection(dir) {
   if (!running) initGame();
   if (dir === 'up' && dy !== 1) { dx = 0; dy = -1; }
@@ -233,7 +214,6 @@ function handleDirection(dir) {
   if (dir === 'right' && dx !== -1) { dx = 1; dy = 0; }
 }
 
-// Eventos dos botões
 buttons.forEach(btn => {
   btn.addEventListener('touchstart', (e) => {
     e.preventDefault();
@@ -244,7 +224,6 @@ buttons.forEach(btn => {
   });
 });
 
-// Teclado
 window.addEventListener('keydown', (e) => {
   const keyMap = {
     ArrowUp: 'up', w: 'up', W: 'up',
@@ -255,12 +234,10 @@ window.addEventListener('keydown', (e) => {
   if (keyMap[e.key]) handleDirection(keyMap[e.key]);
 });
 
-// Reinicia ao clicar
 canvas.addEventListener('click', () => {
   if (!running) initGame();
 });
 
-// Swipe no canvas
 let startX, startY;
 canvas.addEventListener('touchstart', (e) => {
   if (!running) initGame();
