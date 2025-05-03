@@ -9,34 +9,34 @@
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 </head>
 <body>
-  <!-- Tela de Login -->
+  
   <div class="login-modal" id="loginModal">
     <h2>Digite seu nome:</h2>
     <input type="text" id="usernameInput" class="login-input" placeholder="Ex: João" maxlength="20" />
     <button class="login-btn" id="startGameBtn" disabled>Iniciar Jogo</button>
   </div>
 
-  <!-- Contagem Regressiva -->
+  
   <div class="countdown-overlay" id="countdownOverlay">
     <div class="countdown-text" id="countdownText">3</div>
   </div>
 
-  <!-- Pontuação Atual -->
+  
   <div class="top-bar">
     <div class="score" id="scoreDisplay">Pontos: 0</div>
     <button class="show-ranking-btn" id="toggleRankingBtn">Ver Ranking</button>
   </div>
 
-  <!-- Ranking Global -->
+  
   <div class="global-ranking" id="globalRanking">
     <strong>Top 10 Global:</strong>
     <div id="topScores">Carregando...</div>
   </div>
 
-  <!-- Canvas do jogo -->
+  
   <canvas id="gameCanvas"></canvas>
 
-  <!-- Botões virtuais -->
+  
   <div class="controls">
     <div></div><button class="btn" data-dir="up">↑</button><div></div>
     <button class="btn" data-dir="left">←</button>
@@ -44,7 +44,7 @@
     <button class="btn" data-dir="right">→</button>
   </div>
 
-  <!-- Fim de jogo -->
+  
   <div class="game-over" id="gameOver">FIM DE JOGO</div>
 
   <script src="script.js"></script>
