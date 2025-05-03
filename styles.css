@@ -16,7 +16,6 @@ body {
   position: relative;
 }
 
-/* Tela de login */
 .login-modal {
   position: fixed;
   top: 0;
@@ -61,8 +60,7 @@ body {
   cursor: not-allowed;
 }
 
-/* Contagem regressiva */
-.countdown-overlay {
+zcountdown-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -82,7 +80,6 @@ body {
   color: #0f0;
 }
 
-/* Pontuação e botão de ranking */
 .top-bar {
   width: 90%;
   max-width: 600px;
@@ -121,7 +118,6 @@ body {
   background: #444;
 }
 
-/* Ranking global (inicialmente oculto) */
 .global-ranking {
   width: 90%;
   max-width: 600px;
@@ -137,7 +133,6 @@ body {
   display: none;
 }
 
-/* Canvas do jogo */
 canvas {
   background: #111;
   border: 4px solid #0f0;
@@ -145,7 +140,6 @@ canvas {
   cursor: crosshair;
 }
 
-/* Botões virtuais */
 .controls {
   margin-top: 40px;
   display: grid;
@@ -169,7 +163,6 @@ canvas {
   background: #555;
 }
 
-/* Fim de jogo */
 .game-over {
   position: absolute;
   color: red;
@@ -178,7 +171,6 @@ canvas {
   display: none;
 }
 
-/* Responsividade */
 @media (max-width: 400px) {
   .top-bar {
     flex-direction: column;
